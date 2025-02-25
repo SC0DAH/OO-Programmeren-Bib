@@ -85,7 +85,9 @@ namespace BibSenne_Cockx
         // constructors
         public Book(string titel, string author)
         {
-
+            this.titel = titel;
+            this.author = author;
+            Library.bookList.Add(this);
         }
     }
 }
