@@ -13,15 +13,15 @@ namespace BibSenne_Cockx
         private string author;
         private string isbnNumber;
         private int pages;
-        private string genre;
+        private Genres genre;
         private int publishYear;
-        private string language;
-        private Genres type;
+        private Types type;
+        private int rating;
 
         // properties
         public string Titel
         {
-            get { return Titel; }
+            get { return titel; }
         }
 
         public string Author {
@@ -58,36 +58,63 @@ namespace BibSenne_Cockx
             }
         }
 
-        public string Genre
+        public Types Type
         {
-            get { return genre; }
-            set { genre = value; }
+            get { return type; }
         }
 
         public int PublishYear
         {
             get { return publishYear; }
-            set { publishYear = value; }
         }
 
-        public string Language
+        public Genres Genre
         {
-            get { return language; }
-            set { language = value; }
+            get { return genre; }
+            set { genre = value; }
         }
 
-        public Genres Type
+        public int Rating
         {
-            get { return type; }
-            set { type = value; }
+            get { return rating; }
+            set
+            {
+                if (value < 10 && value >= 0)
+                {
+                    rating = value;
+                }
+                else
+                {
+                    Console.WriteLine($"Geef een geldige beoordeling op 10!");
+                }
+            }
         }
 
         // constructors
-        public Book(string titel, string author)
+        public Book(string titel, string author, string isbnNumber, int pages, Genres genre, int publishYear, Types type, int rating, Library library)
         {
             this.titel = titel;
             this.author = author;
-            Library.bookList.Add(this);
+            this.isbnNumber = isbnNumber;
+            this.pages = pages;
+            this.genre = genre;
+            this.publishYear = publishYear;
+            this.type = type;
+            this.rating = rating;
+            library.AddBook(this);
+        }
+
+        // methoden
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Info over het boek: {Titel}");
+            Console.WriteLine($"Auteur: {Author}");
+            Console.WriteLine($"ISBN-nummer: {IsbnNumber}");
+            Console.WriteLine($"Type boek: {Type}");
+            Console.WriteLine($"Aantal pagina's: {Pages}");
+            Console.WriteLine($"Jaar van uitgave: {PublishYear}"); 
+            Console.WriteLine($"Genre: {Type}");
+            Console.WriteLine($"Beoordeling: {Rating}/10");
         }
     }
 }
