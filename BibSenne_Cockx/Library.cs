@@ -63,6 +63,106 @@ namespace BibSenne_Cockx
                 Console.WriteLine("Boek niet gevonden in de bibliotheek.");
             }
             Console.ResetColor();
+        }
+
+        public Book SearchBookByTitleAndAuthor(string title, string author)
+        {
+            foreach (Book book in bookList)
+            {
+                if (book.Title == title && book.Author == author)
+                {
+                    return book;
+                }
+            }
+            return null;
+        }
+
+        public Book SearchBookByISBN(string isbn)
+        {
+            foreach (Book book in bookList)
+            {
+                if (book.IsbnNumber == isbn)
+                {
+                    return book;
+                }
+            }
+            return null;
+        }
+
+        public List<Book> SearchAllBooksFromAuthor(string author)
+        {
+            List<Book> allBooksFromAuthor = new List<Book>();
+            foreach (Book book in bookList)
+            {
+                if (book.Author == author)
+                {
+                    allBooksFromAuthor.Add(book);
+                }
+            }
+            if (allBooksFromAuthor.Count > 0)
+            {
+                return allBooksFromAuthor;
+            }
+            else
+            {
+                return null; // geen boeken gevonden
+            }
+        }
+
+        public List<Book> SearchBooks(string title = null, string author = null, string isbnNumber = null,
+                                   int? minPages = null, Genres? genre = null, int? publishYear = null,
+                                   Types? type = null, int? rating = null)
+        {
+            List<Book> foundBooks = new List<Book>();
+
+            foreach (Book book in bookList)
+            {
+                bool matches = true;
+
+                if (title != null && book.Title == title)
+                {
+                    matches = true;
+                }
+                if (author != null && book.Author == author)
+                {
+                    matches = true;
+                }
+                if (isbnNumber != null && book.IsbnNumber == isbnNumber)
+                {
+                    matches = true;
+                }
+                if (minPages != null && book.Pages >= minPages)
+                {
+                    matches = true;
+                }
+                if (genre != null && book.Genre == genre)
+                {
+                    matches = true;
+                }
+                if (publishYear != null && book.PublishYear == publishYear)
+                {
+                    matches = true;
+                }
+                if (type != null && book.Type == type)
+                {
+                    matches = true;
+                }
+                if (rating != null && book.Rating == rating)
+                {
+                    matches = true;
+                }
+
+                if (matches)
+                {
+                    foundBooks.Add(book);
+                }
+            }
+
+            return foundBooks;
+        }
+
+        public void ReadStudentsFromCSV()
+        {
 
         }
     }
