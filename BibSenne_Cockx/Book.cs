@@ -9,7 +9,7 @@ namespace BibSenne_Cockx
     internal class Book
     {
         // attributen
-        private string titel;
+        private string title;
         private string author;
         private string isbnNumber;
         private int pages;
@@ -19,9 +19,9 @@ namespace BibSenne_Cockx
         private int rating;
 
         // properties
-        public string Titel
+        public string Title
         {
-            get { return titel; }
+            get { return title; }
         }
 
         public string Author {
@@ -91,23 +91,17 @@ namespace BibSenne_Cockx
         }
 
         // constructors
-        public Book(string titel, string author, string isbnNumber, int pages, Genres genre, int publishYear, Types type, int rating, Library library)
+        public Book(string title, string author, string isbnNumber, int pages, Genres genre, int publishYear, Types type, int rating, Library library)
         {
-            this.titel = titel;
+            this.title = title;
             this.author = author;
-            this.isbnNumber = isbnNumber;
-            this.pages = pages;
-            this.genre = genre;
-            this.publishYear = publishYear;
-            this.type = type;
-            this.rating = rating;
             library.AddBook(this);
         }
 
         // methoden
         public void ShowInfo()
         {
-            Console.WriteLine($"Info over het boek: {Titel}");
+            Console.WriteLine($"Info over het boek: {Title}");
             Console.WriteLine($"Auteur: {Author}");
             Console.WriteLine($"ISBN-nummer: {IsbnNumber}");
             Console.WriteLine($"Type boek: {Type}");
