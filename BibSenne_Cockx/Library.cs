@@ -171,21 +171,8 @@ namespace BibSenne_Cockx
 
                 string title = values[0];
                 string author = values[1];
-                string isbnNumber = values[2];
-                int pages = Convert.ToInt32(values[3]);
 
-                Genres genre;
-                Enum.TryParse(values[4], out genre);
-
-                int publishYear = Convert.ToInt32(values[5]);
-
-                Types type;
-                Enum.TryParse(values[6], out type);
-
-                int rating = Convert.ToInt32(values[7]);
-                
-
-                books[i] = new Book(title, author, isbnNumber, pages, genre, publishYear, type, rating, this);
+                books[i] = new Book(title, author, this);
             }
         }
     }
