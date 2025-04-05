@@ -9,6 +9,7 @@
             string title, author;
             while (isRunning)
             {
+                Console.Clear();
                 Console.WriteLine("Welkom bij de Bibliotheek!");
                 Console.WriteLine("Kies een optie:");
                 Console.WriteLine("1. Voeg een boek toe aan de bibliotheek op basis van titel en auteur");
