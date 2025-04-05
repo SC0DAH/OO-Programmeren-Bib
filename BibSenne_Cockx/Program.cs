@@ -33,6 +33,7 @@
                         Console.WriteLine("Wie is de auteur?");
                         author = Console.ReadLine();
                         Book newBook = new Book(title, author, apBibliotheek);
+                        PressKey();
                         break;
                     case "2":
                         Console.Write("Geef de titel in van het boek dat je wilt zoeken: ");
@@ -91,6 +92,7 @@
                         {
                             Console.WriteLine("Het boek dat je zocht is niet gevonden!");
                         }
+                        PressKey();
                         break;
                     case "3":
                         Console.Write("Geef de titel van het boek in: ");
@@ -109,6 +111,7 @@
                             Console.WriteLine("Boek niet gevonden.");
                             Console.ResetColor();
                         }
+                        PressKey();
                         break;
 
                     case "4":
@@ -172,6 +175,7 @@
                                 Console.WriteLine("Ongeldige keuze.");
                                 break;
                         }
+                        PressKey();
                         break;
 
                     case "5":
@@ -191,6 +195,7 @@
                             Console.WriteLine("Boek niet gevonden.");
                             Console.ResetColor();
                         }
+                        PressKey();
                         break;
 
                     case "6":
@@ -207,6 +212,7 @@
                                 Console.WriteLine("---------------------------------");
                             }
                         }
+                        PressKey();
                         break;
 
                     case "7":
@@ -223,6 +229,7 @@
                             Console.WriteLine("Het opgegeven bestand bestaat niet.");
                             Console.ResetColor();
                         }
+                        PressKey();
                         break;
                     case "8":
                         Console.WriteLine("Wil je een krant of een maandblad toevoegen? (K/M)");
@@ -239,15 +246,19 @@
                         {
                             Console.WriteLine("Foute keuze");
                         }
+                        PressKey();
                         break;
                     case "9":
                         apBibliotheek.ShowAllNewspapers();
+                        PressKey();
                         break;
                     case "10":
                         apBibliotheek.ShowAllMagazines();
+                        PressKey();
                         break;
                     case "11":
                         apBibliotheek.AcquisitionsReadingRoomToday(DateTime.Now);
+                        PressKey();
                         break;
                     case "12":
                         Console.WriteLine("Tot ziens!");
@@ -258,6 +269,14 @@
                         break;
                 }
             }
+        }
+
+        public static void PressKey()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Druk een toets om verder te gaan");
+            Console.ResetColor();
+            Console.ReadKey();
         }
     }
 }
