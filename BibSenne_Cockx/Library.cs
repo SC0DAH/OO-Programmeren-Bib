@@ -8,23 +8,29 @@ namespace BibSenne_Cockx
 {
     internal class Library
     {
-        // attributen
         private string name;
-        private List<Book> bookList;
 
-        // properties
         public string Name
         {
             get { return name; }
             set { name = value; }
         }
 
+        private List<Book> bookList;
+
         public List<Book> BookList
         {
             get { return bookList; }
         }
 
-        // constructors
+        private static Dictionary<DateTime, ReadingRoomItem> allReadingRoom = new Dictionary<DateTime, ReadingRoomItem>();
+
+        public static Dictionary<DateTime, ReadingRoomItem> AllReadingRoom
+        {
+            get { return allReadingRoom; }
+        }
+
+
         public Library(string name)
         {
             Name = name;
@@ -105,7 +111,7 @@ namespace BibSenne_Cockx
             }
             else
             {
-                return null; // geen boeken gevonden
+                return null;
             }
         }
 
@@ -173,6 +179,68 @@ namespace BibSenne_Cockx
                 string author = values[1];
 
                 books[i] = new Book(title, author, this);
+            }
+        }
+
+        public void AddNewspaper()
+        {
+            Console.WriteLine("Wat is de naam van de krant?");
+            string newspaperName = Console.ReadLine();
+            Console.WriteLine("Wat is de datum van de krant?");
+            DateTime date = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Wat is de uitgeverij van de krant?");
+            string publisher = Console.ReadLine();
+            NewsPaper newsPaper = new NewsPaper(newspaperName, publisher, date);
+            allReadingRoom.Add(DateTime.Now, newsPaper);
+        }
+
+        public void AddMagazine()
+        {
+            Console.WriteLine("Wat is de naam van het maandblad?");
+            string magazineName = Console.ReadLine();
+            Console.WriteLine("Wat is de maand van het maandblad?");
+            byte month = Convert.ToByte(Console.ReadLine());
+            Console.WriteLine("Wat is het jaar van het maandblad?");
+            uint year = Convert.ToUInt32(Console.ReadLine());
+            Console.WriteLine("Wat is de uitgeverij van het maadnblad?");
+            string publisher = Console.ReadLine();
+            Magazine magazine = new Magazine(magazineName, publisher, month, year);
+            allReadingRoom.Add(DateTime.Now, magazine);
+        }
+
+        public void ShowAllMagazines()
+        {
+            Console.WriteLine("Alle magazines uit de leeszaal:");
+            foreach (var readingRoomItem in allReadingRoom)
+            {
+                if (readingRoomItem.Value is Magazine)
+                {
+                    Console.WriteLine($"- {readingRoomItem.Value.Title} van {((Magazine)readingRoomItem.Value).Month}/{((Magazine)readingRoomItem.Value).Year} van uitgeverij {readingRoomItem.Value.Publisher}");
+                }
+            }
+        }
+
+        public void ShowAllNewspapers()
+        {
+            Console.WriteLine("Alle kranten uit de leeszaal:");
+            foreach (var readingRoomItem in allReadingRoom)
+            {
+                if (readingRoomItem.Value is NewsPaper)
+                {
+                    Console.WriteLine($"- {readingRoomItem.Value.Title} van {((NewsPaper)readingRoomItem.Value).Date.ToString("D")} van uitgeverij {readingRoomItem.Value.Publisher}");
+                }
+            }
+        }
+
+        public void AcquisitionsReadingRoomToday(DateTime date)
+        {
+            Console.WriteLine($"Aanwinsten in de leeszaal van {date.ToString("D")}");
+            foreach (var readingRoomItem in allReadingRoom)
+            {
+                if (readingRoomItem.Key.Date == date.Date)
+                {
+                    Console.WriteLine($"{readingRoomItem.Value.Title} met id {readingRoomItem.Value.Identification}");
+                }
             }
         }
     }

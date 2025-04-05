@@ -61,11 +61,13 @@ namespace BibSenne_Cockx
         public Types Type
         {
             get { return type; }
+            set { type = value; }
         }
 
         public int PublishYear
         {
             get { return publishYear; }
+            set { publishYear = value; }
         }
 
         public Genres Genre
@@ -91,7 +93,7 @@ namespace BibSenne_Cockx
         }
 
         // constructors
-        public Book(string title, string author, string isbnNumber, int pages, Genres genre, int publishYear, Types type, int rating, Library library)
+        public Book(string title, string author, Library library)
         {
             this.title = title;
             this.author = author;
