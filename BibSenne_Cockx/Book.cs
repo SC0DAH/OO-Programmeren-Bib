@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BibSenne_Cockx
 {
-    internal class Book
+    internal class Book : ILendable
     {
         // attributen
         private string title;
@@ -34,12 +34,9 @@ namespace BibSenne_Cockx
             set {
                 if (value.Length != 13 || !value.StartsWith("978") && !value.StartsWith("979"))
                 {
-                    Console.WriteLine("Geef een geldig ISBN nummer op!");
+                    throw new InvalidIsbnException("ISBN moet 13 cijfers bevatten en starten met 978 of 979.");
                 }
-                else
-                {
-                    isbnNumber = value;
-                }
+                isbnNumber = value;
             }
         }
 
@@ -47,14 +44,11 @@ namespace BibSenne_Cockx
         {
             get { return pages; }
             set {
-                if (value > 0)
+                if (value <= 0)
                 {
-                    pages = value;
+                    throw new ArgumentOutOfRangeException("", "Aantal pagina's moet groter zijn dan 0.");
                 }
-                else
-                {
-                    Console.WriteLine("Geef een geldig aantal paginas op!");
-                }
+                pages = value;
             }
         }
 
@@ -67,7 +61,14 @@ namespace BibSenne_Cockx
         public int PublishYear
         {
             get { return publishYear; }
-            set { publishYear = value; }
+            set 
+            {
+                if (value > DateTime.Now.Year)
+                {
+                    throw new InvalidYearException("Publicatiejaar kan niet in de toekomst liggen.");
+                }
+                publishYear = value;
+            }
         }
 
         public Genres Genre
@@ -81,20 +82,22 @@ namespace BibSenne_Cockx
             get { return rating; }
             set
             {
-                if (value < 10 && value >= 0)
+                if (value < 0 || value > 10)
                 {
-                    rating = value;
+                    throw new ArgumentException("Rating moet tussen 0 en 10 liggen.");
                 }
-                else
-                {
-                    Console.WriteLine($"Geef een geldige beoordeling op 10!");
-                }
+                rating = value;
             }
         }
+
+        public bool IsAvailable { get; set; }
+        public DateTime BorrowingDate { get; set; }
+        public int BorrowDays { get; set; }
 
         // constructors
         public Book(string title, string author, Library library)
         {
+            IsAvailable = true;
             this.title = title;
             this.author = author;
             library.AddBook(this);
@@ -103,6 +106,7 @@ namespace BibSenne_Cockx
         // methoden
         public void ShowInfo()
         {
+            Console.WriteLine("---------------------------------");
             Console.WriteLine($"Info over het boek: {Title}");
             Console.WriteLine($"Auteur: {Author}");
             Console.WriteLine($"ISBN-nummer: {IsbnNumber}");
@@ -111,6 +115,59 @@ namespace BibSenne_Cockx
             Console.WriteLine($"Jaar van uitgave: {PublishYear}"); 
             Console.WriteLine($"Genre: {Type}");
             Console.WriteLine($"Beoordeling: {Rating}/10");
+            Console.WriteLine("---------------------------------");
+        }
+
+        public void Borrow()
+        {
+            if (IsAvailable)
+            {
+                BorrowingDate = DateTime.Now;
+                IsAvailable = false;
+                if (Genre == Genres.Schoolboek)
+                {
+                    BorrowDays = 10;
+                }
+                else
+                {
+                    BorrowDays = 20;
+                }
+                DateTime dueDate = BorrowingDate.AddDays(BorrowDays);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Boek '{Title}' werd uitgeleend. Terugbrengen uiterlijk op: {dueDate:dd/MM/yyyy}");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Boek '{Title}' is momenteel niet beschikbaar.");
+            }
+            Console.ResetColor();
+        }
+
+        public void Return()
+        {
+            if (!IsAvailable)
+            {
+                DateTime dueDate = BorrowingDate.AddDays(BorrowDays);
+                DateTime returnDate = DateTime.Now;
+                IsAvailable = true;
+
+                if (returnDate > dueDate)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Boek '{Title}' is te laat teruggebracht op {returnDate:dd/MM/yyyy}. Deadline was {dueDate:dd/MM/yyyy}.");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Boek '{Title}' werd op tijd teruggebracht op {returnDate:dd/MM/yyyy}.");
+                }
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine($"Boek '{Title}' was niet uitgeleend.");
+            }
         }
     }
 }

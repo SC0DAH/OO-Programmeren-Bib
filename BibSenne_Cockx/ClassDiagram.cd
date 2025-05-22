@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BibSenne_Cockx.Book">
+    <Position X="13.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQCAABEIghAYEAIAGAQABAAEAAQAAkIAAAIA=</HashCode>
+      <FileName>Book.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="BibSenne_Cockx.Library">
+    <Position X="9.75" Y="3.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAQhAAIACAAIAQAAACECAAAggCEEAAAAAA=</HashCode>
+      <FileName>Library.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BibSenne_Cockx.Magazine">
+    <Position X="16.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAEAAABBAAAAAAgAAAAAAAAAAQAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Magazine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BibSenne_Cockx.NewsPaper">
+    <Position X="21.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAgAAAAIAAAAAAAAAABAAAAAQAAAAA=</HashCode>
+      <FileName>NewsPaper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BibSenne_Cockx.ReadingRoomItem">
+    <Position X="19" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABQAAAAEAgCAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ReadingRoomItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="BibSenne_Cockx.ILendable">
+    <Position X="13.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAIAAAAEAAAAAAAAAAAAAAAAEIAAAAA=</HashCode>
+      <FileName>ILendable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -27,12 +27,9 @@ namespace BibSenne_Cockx
 			{
 				if (value > 12)
 				{
-                    Console.WriteLine("De maand is maximaal 12!");
+					throw new ArgumentOutOfRangeException("","De maand kan maximaal 12 zijn!");
 				}
-				else
-				{
-                    month = value;
-                }
+                month = value;
 			}
 		}
 

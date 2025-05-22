@@ -109,62 +109,25 @@ namespace BibSenne_Cockx
             {
                 return allBooksFromAuthor;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
-        public List<Book> SearchBooks(string title = null, string author = null, string isbnNumber = null,
-                                   int? minPages = null, Genres? genre = null, int? publishYear = null,
-                                   Types? type = null, int? rating = null)
+        public List<Book> SearchBooksByPages(int minPages)
         {
             List<Book> foundBooks = new List<Book>();
 
             foreach (Book book in bookList)
             {
-                bool matches = true;
-
-                if (title != null && book.Title == title)
-                {
-                    matches = true;
-                }
-                if (author != null && book.Author == author)
-                {
-                    matches = true;
-                }
-                if (isbnNumber != null && book.IsbnNumber == isbnNumber)
-                {
-                    matches = true;
-                }
-                if (minPages != null && book.Pages >= minPages)
-                {
-                    matches = true;
-                }
-                if (genre != null && book.Genre == genre)
-                {
-                    matches = true;
-                }
-                if (publishYear != null && book.PublishYear == publishYear)
-                {
-                    matches = true;
-                }
-                if (type != null && book.Type == type)
-                {
-                    matches = true;
-                }
-                if (rating != null && book.Rating == rating)
-                {
-                    matches = true;
-                }
-
-                if (matches)
+                if (book.Pages >= minPages)
                 {
                     foundBooks.Add(book);
                 }
             }
-
-            return foundBooks;
+            if (foundBooks.Count > 0)
+            {
+                return foundBooks;
+            }
+            return null;
         }
 
         public void ReadStudentsFromCSV(string path)
@@ -187,11 +150,32 @@ namespace BibSenne_Cockx
             Console.WriteLine("Wat is de naam van de krant?");
             string newspaperName = Console.ReadLine();
             Console.WriteLine("Wat is de datum van de krant?");
-            DateTime date = DateTime.Parse(Console.ReadLine());
+            DateTime date;
+            try
+            {
+                date = DateTime.Parse(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Je moet een geldige datum ingeven! Probeer later opnieuw");
+                return;
+            }
+            
             Console.WriteLine("Wat is de uitgeverij van de krant?");
             string publisher = Console.ReadLine();
-            NewsPaper newsPaper = new NewsPaper(newspaperName, publisher, date);
-            allReadingRoom.Add(DateTime.Now, newsPaper);
+            try
+            {
+                NewsPaper newsPaper = new NewsPaper(newspaperName, publisher, date);
+                allReadingRoom.Add(DateTime.Now, newsPaper);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Krant niet toegevoegd!: " + ex.Message);
+                Console.ResetColor();
+            }
+            
+            
         }
 
         public void AddMagazine()
@@ -199,13 +183,48 @@ namespace BibSenne_Cockx
             Console.WriteLine("Wat is de naam van het maandblad?");
             string magazineName = Console.ReadLine();
             Console.WriteLine("Wat is de maand van het maandblad?");
-            byte month = Convert.ToByte(Console.ReadLine());
+            byte month;
+            try
+            {
+                month = Convert.ToByte(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Je moet een geldige maand invoeren! Probeer later opnieuw");
+                return;
+            }
+            
             Console.WriteLine("Wat is het jaar van het maandblad?");
-            uint year = Convert.ToUInt32(Console.ReadLine());
-            Console.WriteLine("Wat is de uitgeverij van het maadnblad?");
+            uint year;
+            try
+            {
+                year = Convert.ToUInt32(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Je moet een geldig jaar invoeren! Probeer later opnieuw");
+                return;
+            }
+            
+            Console.WriteLine("Wat is de uitgeverij van het maandblad?");
             string publisher = Console.ReadLine();
-            Magazine magazine = new Magazine(magazineName, publisher, month, year);
-            allReadingRoom.Add(DateTime.Now, magazine);
+            try
+            {
+                Magazine magazine = new Magazine(magazineName, publisher, month, year);
+                allReadingRoom.Add(DateTime.Now, magazine);
+            }
+            catch (ArgumentOutOfRangeException aoex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Magazine niet toegevoegd!: " + aoex.Message);
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Onverwachte fout: " + ex.Message);
+            }
         }
 
         public void ShowAllMagazines()
