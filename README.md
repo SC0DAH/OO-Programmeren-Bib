@@ -1,2 +1,2 @@
 # Projectopdracht OOP C#
-## Final grade: x/20
+## Final grade: 18.7/20
